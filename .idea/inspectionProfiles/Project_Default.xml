@@ -1,0 +1,15 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="HtmlUnknownAttribute" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="myValues">
+        <value>
+          <list size="1">
+            <item index="0" class="java.lang.String" itemvalue="ms-href ms-repeat ms-text ms-html ms-widget ms-if ms-if-loop ms-widget ms-attr ms-data ms-css ms-class ms-include ms-skip ms-controller ms-important ms-duplex ms-duplex-number ms-duplex-string ms-duplex-boolean ms-duplex-checked ms-submit ms-scroll ms-scan ms-change ms-input ms-click ms-dblclick ms-keypress ms-keydown ms-keyup ms-mousemove ms-mouseover ms-mouseout ms-mouseleave ms-mouseenter ms-focus ms-blur ms-animationend ms-include-src ms-on-animationend ms-on-blur ms-on-change ms-on-input ms-on-click ms-on-dblclick ms-on-focus ms-on-keydown ms-on-keypress ms-on-keyup ms-on-mousedown ms-on-mouseenter ms-on-mouseleave ms-on-mousemove ms-on-mouseout ms-on-mouseover ms-on-mouseup ms-on-scan ms-on-scroll ms-on-submit" />
+          </list>
+        </value>
+      </option>
+      <option name="myCustomValuesEnabled" value="true" />
+    </inspection_tool>
+  </profile>
+</component>
