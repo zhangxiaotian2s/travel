@@ -48,9 +48,6 @@ html{font-size:10px}
 .bk-white{ background: #FFFFFF;}
 .bkgray{ background: #f6f6f6;}
 .color-red{color: #FF6666;}
-
-
-
 .pr{ position: relative;}
 .pa{ position: absolute;}
 .pf{ position: fixed;}
@@ -82,8 +79,114 @@ html{font-size:10px}
 .col-xs-offset-1 {margin-left: 8.33333333%;}
 .col-xs-offset-0 {margin-left: 0;}
 h1,h2,h3,h4,h5,h6{ font-weight: normal; }
+.line{   width: 100%; height: 1px; background: #e0e0e0 ; clear: both; margin: 0.5rem auto;}
+.text-blod{ font-weight: bold;}
 
-.index-list-ul{ width: 90%;margin: auto;}
-.index-list-ul li{width: 100%; height: 14rem; overflow: hidden; margin: 1rem auto; border-radius: 5px;}
-.index-list-ul li img{ width: 100%}
-.index-list-ul li p{  color: #FFFFFF; bottom: 0px;  font-size:1.4rem ;}
+@font-face {
+  font-family: "iconfont";
+  src: url('iconfont.ttf?t=1465195665') format('truetype');/* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+}
+
+.iconfont {
+  font-family:"iconfont" !important;
+  font-size:16px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke-width: 0.2px;
+  -moz-osx-font-smoothing: grayscale;
+}
+.icon-jiahao:before { content: "\e600"; }
+.icon-dianhua:before { content: "\e601"; }
+.icon-jianhao:before { content: "\e602"; }
+.icon-tip:before { content: "\e603"; }
+.icon-shalou:before { content: "\e604"; }
+.icon-true:before { content: "\e605"; }
+
+
+.index-list li{ width: 94%; margin:1rem auto; border: #e0e0e0 solid 1px;   border-radius: 4px;  }
+.index-list-img .titlemes{  bottom: 0px; width: 94%; left: 3%; color: #FFFFFF;}
+.index-list-img .titlemes h2{ font-size: 1.3rem; font-weight: bold; line-height: 1.6rem;}
+.index-list-img .titlemes p{ margin: 0.3rem 0px;}
+
+.index-list-foot-mes{ padding: 0.5rem 0px ;}
+.price-tag-mes strong{  font-size: 1.5rem; color: #ff6666; display: block;  margin:0rem 0.5rem 0.5rem;}
+.price-tag-mes strong small{font-size: 1rem;}
+.price-tag-mes span{ display: block; float: left; overflow: hidden; border: #FF6666 solid 1px; margin-left: 0.4rem; padding:0rem 0.1rem ;  height: 1.4rem; line-height: 1.4rem; font-size: 0.7rem; border-radius: 0.7rem; color: #FF6666;}
+
+.due_box{ width: 80%;  border: #ffaa50 solid 1px; margin: 0.2rem  auto 0.3rem; text-align: center; overflow: hidden;}
+.due_box h3{  height: 2rem; line-height: 2rem; background: #FFAA50;  color: #FFFFFF;  font-size: 1.2rem; width: 100%;}
+.due_box  p{  line-height: 1.4rem; font-size: 0.9rem; color: #FFAA50;}
+
+.safe-details{  width: 94%; margin: auto;}
+.safe-details p{ font-size: 1.1rem; line-height: 1.6rem;  margin: 0.2rem 0px; text-indent: 2rem;}
+
+
+
+.pay-end-icon{  font-size: 4rem; color: #cccccc; display: block; width: 4rem; height: 4rem; margin: auto; }
+.pay-end-top{ background: #FFFFFF; border-bottom: #CCCCCC solid 1px;}
+.pay-end-ts-mes{ text-align: center; font-size: 1.2rem;  color: #CCCCCC;} 
+.pay-end-btnbox a{ width: 35%; float: left; margin-left: 10%; display: block; text-align: center; height: 3rem; line-height: 3rem;  border: #CCCCCC solid 1px; color: #000000; font-size: 1.2rem;  background: #f3f3f3; box-sizing:border-box; box-shadow: #eeeded 0px 3px 0px; border-radius: 4px; }
+
+.pay-end-ts-bottom{  border: #ffaa50 solid 1px; background: #ffe5c9; width: 90%; margin:2rem auto; padding:1rem 2%; color: #996633;  font-size: 1.1rem;  line-height: 1.6rem;}
+.pay-end-ts-bottom p span{color: #fda959;}
+
+
+
+/*order*/
+.order-details-header{ background: #FFFFFF; border-bottom: #dadada solid 1px; padding: 0.5rem 3%; width: 94%;}
+.order-details-header h1{ font-size: 1.4rem;line-height: 1.6rem; margin-bottom: 0.2rem; }
+.order-details-header p{ font-size: 1rem;  color: #CCCCCC;}
+.box-border{  width:92%; margin: auto; border: #e0e0e0 solid 1px; border-radius: 3px; padding: 0.5rem 2%; background: #FFFFFF;}
+.order-details-des ul {  overflow: hidden;}
+.order-details-des ul li{  line-height: 2.0rem; font-size: 1.1rem;}
+.order-details-des ul li div.col-xs-5{ color: #999999;}
+.foot-fixed{  bottom: 0px ;  border-top:#e0e0e0 solid 1px; width: 100%;  max-width: 640px; background: #FFFFFF;}
+
+.order-details-footer{ line-height: 3.6rem;  font-size: 1.2rem;}
+.order-details-foot-btn{ text-align: center; background: #cccccc; line-height: 3.6rem; color: #FFFFFF; font-size: 1.2rem}
+.order-details-footer .go-pay,.travel-details-footer .go-pay{ background: #fdaa50;}
+
+.order-list h2{  margin-bottom: 0.2rem; font-size: 1.4rem;}
+.orde-list-des{ font-size: 1rem;  line-height: 2rem; color: #cccccc;}
+.orde-list-des p {text-align: right;}
+.orde-list-des p span{ font-size: 1.1rem;}
+.orde-list-price { line-height: 2.6rem;}
+.order-list-go-pay{ display: block; width: 100%; border: #ffaa50 solid 1px; height: 2rem; line-height: 2rem; box-sizing: border-box; margin: 0.3rem auto; text-align: center; color: #ffaa50; border-radius: 4px;}
+
+
+.section-title{ width: 96%; margin: auto;  line-height: 2rem; font-size: 1rem; color: #CCCCCC;}
+.order-start-mes ul li{ line-height: 2.6rem; font-size: 1.1rem}
+.right-action-box span{ float:  right; display: block; width: 1.6rem; height: 1.6rem;  border: #CCCCCC solid 1px; line-height: 1.4rem; text-align: center; box-sizing: border-box;margin: 0.5rem 0rem; border-radius: 3px;}
+.right-action-box div{ float: right; width: 3rem; height: 1.6rem; line-height: 1.6rem; text-align: center; margin: 0.5rem 0.5rem; border: #CCCCCC solid 1px; box-sizing: border-box;}
+
+.order-start-mes .right-input  input{ width: 80%; float: right; border: none; height: 2.6rem; line-height: 2.6rem; text-align: right;  font-size: 1.1rem; }
+.order-start-tips-span{ font-size: 1.1rem; color: #cccccc;}
+
+
+.banner-box { width: 100%; max-height: 14rem; overflow: hidden; }
+.banner-box  ul.banner-nr { width: 1000000px;}
+.banner-box  ul  li{ float:left;}
+.banner-dian{ z-index: 100px;  left: 50%; top: 7rem; }
+.banner-dian li{ width:0.6rem;  height: 0.6rem; background: #e2dbdf; border-radius: 0.3rem; margin-left: 0.5rem;}
+.banner-dian li.current{ background: #FFFFFF;}
+
+
+.travel-banner{ width: 94%; margin:1rem auto; border: #CCCCCC solid 1px;  border-radius: 4px;  overflow: hidden; background: #FFFFFF;}
+.banner-price-box { width: 10rem; height: 3rem;  line-height: 3rem; top: 9rem; left: 0rem; text-align: center;  color: #FFFFFF; font-size: 1.6em; left: 0px;}
+.banner-price-box small{ font-size: 0.9rem;}
+.banner-price-box-bk{background: #000000; opacity: 0.6; -webkit-opacity: 0.6; }
+.travel-banner-title {width: 96%; margin: auto;}
+.travel-banner-title h1{ line-height: 1.6rem; margin: 0.3rem 0px; font-size: 1.3rem;}
+.travel-banner-title p{ line-height: 1.8rem;  color: #CCCCCC;  }
+.travel-banner-title p span{display: block; float: right;}
+
+.travel-details-content{ background: #FFFFFF;  border-top: #CCCCCC solid 1px;}
+.travel-details-content-nav  { border-bottom: #CCCCCC solid 1px;}
+.travel-details-content-nav  ul li{ text-align: center;  line-height: 3rem; box-sizing: border-box;  }
+.travel-details-content-nav  ul li.current{border-bottom: #FF6666 solid 2px;}
+
+.travel-details-content-one{ width: 94%; margin:1rem auto; }
+.travel-details-content-one p{  line-height: 1.6rem; margin: 0.5rem 0px; }
+
+.travel-details-footer-tel span{ font-size: 2rem; display: block; height: 2.0rem; width: 2.0rem;  margin: 0.7rem; color: #fc686a;  float: left;}
+.travel-details-footer-tel strong{ float: left;margin: 0.7em 0px; color: #FC686A; font-weight: normal; line-height: 1rem;}
