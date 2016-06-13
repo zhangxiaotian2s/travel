@@ -1,0 +1,51 @@
+<div class="travel-banner">
+    <div class="banner-box pr">
+        <ul id="banner-ul" class="banner-nr">
+            <banner images="travleDetailsData.images"> </banner>
+            <!--<li ng-repeat="image in travleDetailsData.images">-->
+                <!--<img ng-src={{image.image}} class="img-responsive">-->
+            <!--</li>-->
+        </ul>
+        <p class="banner-price-box  banner-price-box-bk pa"></p>
+        <p class="banner-price-box pa">￥{{travleDetailsData.adult_price}}<small>起</small></p>
+    </div>
+    <div class="travel-banner-title">
+        <h1>{{travleDetailsData.title}}</h1>
+        <p>{{travleDetailsData.desc}} <span>已有{{travleDetailsData.ordernum}}人预订</span></p>
+    </div>
+</div>
+<div class="blank1"></div>
+<div class="travel-details-content clearfix">
+    <div class="travel-details-content-nav  clearfix">
+        <ul>
+            <li class="col-xs-3 current" ng-click="tab=1" ng-class="{true: 'current', false: ' '}[tab==1]">行程特色</li>
+            <li class="col-xs-3" ng-click="tab=2" ng-class="{true: 'current', false: ' '}[tab==2]">行程安排</li>
+            <li class="col-xs-3" ng-click="tab=3" ng-class="{true: 'current', false: ' '}[tab==3]">费用说明</li>
+            <li class="col-xs-3" ng-click="tab=4" ng-class="{true: 'current', false: ' '}[tab==4]">购买须知</li>
+        </ul>
+    </div>
+    <div class="travel-details-content-box">
+        <div class="travel-details-content-one" ng-if="tab==1" ng-bind-html="travleDetailsData.content_characteristic | trustHtml">
+        </div>
+        <div class="travel-details-content-one" ng-if="tab==2"  ng-bind-html="travleDetailsData.content_plan | trustHtml">
+            2
+        </div>
+        <div class="travel-details-content-one" ng-if="tab==3"  ng-bind-html="travleDetailsData.content_fee | trustHtml">
+            3
+        </div>
+        <div class="travel-details-content-one" ng-if="tab==4"  ng-bind-html="travleDetailsData.content_notice | trustHtml">
+            4
+        </div>
+    </div>
+</div>
+<div class="blank2"></div>
+<div class="blank2"></div>
+<div class="foot-fixed travel-details-footer   pf">
+    <div class="col-xs-4 travel-details-footer-tel" >
+        <a href="tel:10086">
+        <span class="iconfont icon-dianhua"></span>
+        <strong>联系<br />客服</strong>
+        </a>
+    </div>
+    <div class="col-xs-8 order-details-foot-btn go-pay">立即预定</div>
+</div>
