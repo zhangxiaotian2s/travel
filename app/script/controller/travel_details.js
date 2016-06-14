@@ -29,6 +29,12 @@ travelDetailsModule.controller('travelDetailsCtrl', ['$scope', 'travelDetailsSer
             },
             {
                 "image": "http://7xl619.com1.z0.glb.clouddn.com/1.jpg"
+            },
+            {
+                "image": "http://7xl619.com1.z0.glb.clouddn.com/2.jpg"
+            },
+            {
+                "image": "http://7xl619.com1.z0.glb.clouddn.com/3.jpg"
             }
         ]
     }

@@ -3,7 +3,7 @@
  */
 var travelListModule = angular.module('travelListModule', ['travelServiceModule']);
 
-travelListModule.controller('travelIndexListCtrl', ['$scope', '$state','travelIndexListService', function ($scope, $state,travelIndexListService) {
+travelListModule.controller('travelIndexListCtrl', ['$scope', '$state','travelIndexListService','pageJumpService', function ($scope, $state,travelIndexListService,pageJumpService) {
     $scope.tab=1;
     $scope.traveListData = [ {
         "uuid": "1cc6172e-304c-11e6-9f65-7736acbdaf33",
@@ -44,9 +44,8 @@ travelListModule.controller('travelIndexListCtrl', ['$scope', '$state','travelIn
     //}).error(function(data,header,config,status){
     //
     // })
-    $scope.detailsGo=function(id){
-        $state.go('details', {
-            uuid: id
-        })
-     }
+    $scope.statego=function(url,id){
+        pageJumpService.statego(url,id)
+    }
+
 }])

@@ -1,14 +1,16 @@
 <div class="travel-banner">
-    <div class="banner-box pr">
+    <banner>
+    <div class="banner-box pr" id="bannerbox">
         <ul id="banner-ul" class="banner-nr">
             <banner images="travleDetailsData.images"> </banner>
-            <!--<li ng-repeat="image in travleDetailsData.images">-->
-                <!--<img ng-src={{image.image}} class="img-responsive">-->
-            <!--</li>-->
+            <li ng-repeat="image in travleDetailsData.images">
+                <img ng-src={{image.image}} class="img-responsive">
+            </li>
         </ul>
         <p class="banner-price-box  banner-price-box-bk pa"></p>
         <p class="banner-price-box pa">￥{{travleDetailsData.adult_price}}<small>起</small></p>
     </div>
+    </banner>
     <div class="travel-banner-title">
         <h1>{{travleDetailsData.title}}</h1>
         <p>{{travleDetailsData.desc}} <span>已有{{travleDetailsData.ordernum}}人预订</span></p>

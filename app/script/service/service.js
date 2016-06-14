@@ -29,5 +29,26 @@ travelServiceModule.service('travelDetailsService', function ($http) {
             method: 'GET'
         })
     }
+})
+/*
+* 订单创建
+ */
+travelServiceModule.service('orderCreatService', function ($http) {
 
 })
+
+/*
+* 页面跳转
+* */
+travelServiceModule.service('pageJumpService',['$state',function ($state) {
+
+    this.statego=function(url,id){
+        $state.go(url, {
+            uuid: id
+        })
+    };
+}])
+
+
+
+

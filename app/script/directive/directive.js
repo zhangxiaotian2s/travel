@@ -1,7 +1,7 @@
 /**
  * Created by zhangxiaotian on 16/6/5.
  */
-var travelDirceitve = angular.module('travelDirectiveModule', ['travelListModule', 'travelDetailsModule','ngTouch']);
+var travelDirceitve = angular.module('travelDirectiveModule', ['travelListModule', 'travelDetailsModule', 'ngTouch']);
 
 /*
  * 图片懒加载
@@ -27,36 +27,95 @@ travelDirceitve.directive("imglazyload", function () {
  * */
 
 
-travelDirceitve.directive("banner", function () {
+travelDirceitve.directive("banner", ['$timeout', function ($timeout) {
     return {
         restrict: 'E',
-        replace: true,
-        scope: {
-            images: '='
-        },
-        template: '<li ng-repeat="image in images">' +
-        '<img ng-src={{image.image}} class="img-responsive">' +
-        '</li>',
-        link:function(attrs,element,attrs){
+        replace: false,
+        link: function (attrs, element, attrs) {
             function banner(number) {
+                this.bannerbox = $('#bannerbox');
+                this.bannerid = '#bannerbox';
+                this.li_width = this.bannerbox.width();
                 this.banner_ul = $('#banner-ul');
-                this.banner_li = this.banner_ul.children('li')
-                this.li_length = this.banner_ul.children('li').length || number;
-                this.li_width = $(window).width() > 640 ? 640 : $(window).width();
                 this.timer = '';
-                this.banner_dian = $('#banner-dian');
-                this.banner_dian_li = this.banner_dian.children('li');
                 this.index = 0;
+                this.evx = 0;
+                this.timer = null;
             };
-            var banner=new  banner()
-            touch.on('#banner-ul','swiperight', function () {
-                console.log(scope.images.length)
-            })
+            banner.prototype.init = function () {
+                var self = this
+                self.banner_li = self.banner_ul.children('li')
+                self.li_length = self.banner_ul.children('li').length;
+                self.banner_li.css('width', self.li_width + 'px');
+                //自动化
+                self.bannerAuto()
+                //清除掉默认事件
+                touch.on(self.bannerid, 'touchstart', function (ev) {
+                    ev.preventDefault();
+                });
+                //拖动状态处理
+                touch.on(self.bannerid, 'drag', function (ev) {
+                    clearInterval(self.timer);
+                    var _offx = -self.index * self.li_width + ev.x;
+                    self.evx = ev.x;
+                    self.banner_ul.css({
+                        '-webkit-transition': '0.0s  linear',
+                        'transition': '0.0s  linear',
+                        '-webkit-transform': 'translate3d(' + _offx + 'px,0,0)',
+                        'transform': 'translate3d(' + _offx + 'px,0,0)'
+                    })
+
+                });
+
+                touch.on(self.bannerid, 'dragend', function (ev) {
+                    var _offx = 0;
+                    if (self.evx > 0 && self.index !== 0) {
+                        self.index--;
+                    } else if (self.evx < 0 && self.index != self.li_length - 1) {
+                        self.index++;
+                    }
+                    _offx = -self.index * self.li_width;
+                    self.bannerAction(_offx);
+                    self.bannerAuto()
+                });
+
+            };
+
+            banner.prototype.bannerAction = function (offx) {
+                var self = this;
+                self.banner_ul.css({
+                    '-webkit-transition': '0.5s  linear',
+                    'transition': '0.5s  linear',
+                    '-webkit-transform': 'translate3d(' + offx + 'px,0,0)',
+                    'transform': 'translate3d(' + offx + 'px,0,0)'
+                })
+            };
+            banner.prototype.bannerAuto = function () {
+                var self = this;
+                self.timer = setInterval(function () {
+                    self.index++;
+                    if (self.index > self.li_length - 1) {
+                        self.index = 0;
+                    }
+                    _offx = -self.index * self.li_width;
+                    self.bannerAction(_offx)
+                }, 3000)
+            }
+
+            var banner = new banner()
+
+            $timeout(function () {
+                banner.init()
+            });
+
+            //touch.on('#banner-ul','swiperight', function () {
+            //    console.log(banner.bannerbox.width())
+            //})
 
         }
     }
 
-})
+}])
 
 
 
