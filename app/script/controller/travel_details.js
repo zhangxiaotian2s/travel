@@ -3,7 +3,7 @@
  */
 var travelDetailsModule = angular.module('travelDetailsModule', ['travelServiceModule','travelFilterModule']);
 
-travelDetailsModule.controller('travelDetailsCtrl', ['$scope', 'travelDetailsService', function ($scope, travelDetailsService) {
+travelDetailsModule.controller('travelDetailsCtrl', ['$scope', 'travelDetailsService','pageJumpService', function ($scope, travelDetailsService,pageJumpService) {
     $scope.travleDetailsData = {
         "uuid": "1cc6172e-304c-11e6-9f65-7736acbdaf33",
         "country": "中国",
@@ -37,6 +37,11 @@ travelDetailsModule.controller('travelDetailsCtrl', ['$scope', 'travelDetailsSer
                 "image": "http://7xl619.com1.z0.glb.clouddn.com/3.jpg"
             }
         ]
+    }
+
+
+    $scope.statego=function(url,id){
+        pageJumpService.statego(url,id)
     }
 
 

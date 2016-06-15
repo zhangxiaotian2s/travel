@@ -1,37 +1,1 @@
-/**
- * Created by 50683 on 2016/6/14.
- */
-var orderCreatModule=angular.module('orderCreatModule',['travelServiceModule'])
-
-orderCreatModule.controller('orderCreatCtrl',['$scope','orderCreatService',function($scope,orderCreatService){
-
-    $scope.adult_price=9980.0;
-   $scope.child_price=4880.0;
-    $scope.adult_num=1;
-    $scope.child_num=0;
-    $scope.name='';
-    $scope.phone='';
-    $scope.total_price=  $scope.adult_price* $scope.adult_num;
-   var getTotalPric= function () {
-       $scope.total_price=  $scope.adult_price* $scope.adult_num;
-   }
-    $scope.addNumberFn= function (arg) {
-        if(arg==="adult_num") {
-            $scope.adult_num++
-        }
-        getTotalPric()
-    }
-    $scope.minusNumberFn= function (arg) {
-        if(arg==="adult_num") {
-            $scope.adult_num--
-            $scope.adult_num=  $scope.adult_num<=1?1: $scope.adult_num;
-        }
-        getTotalPric()
-    }
-
-
-    //��ת
-    $scope.statego=function(url,id){
-        pageJumpService.statego(url,id)
-    }
-}])
+/** * Created by 50683 on 2016/6/14. */var orderCreatModule = angular.module('orderCreatModule', ['travelServiceModule'])orderCreatModule.controller('orderCreatCtrl', ['$scope', 'orderCreatService', 'orderValidateService', function ($scope, orderCreatService, orderValidateService) {    $scope.adult_price = 9980.0;    $scope.child_price = 4880.0;    $scope.adult_num = 1;    $scope.child_num = 0;    $scope.name = '';    $scope.phone = '';    $scope.assurance_price = 80;    $scope.assurance_num = 0;    $scope.all_people = 1;    $scope.total_price = $scope.adult_price * $scope.adult_num + $scope.child_price * $scope.child_num + $scope.assurance_price * $scope.assurance_num;    /*     * 计算     * */    var getTotalPric = function () {        $scope.all_people = $scope.adult_num + $scope.child_num;        $scope.assurance_num = $scope.assurance_num > $scope.all_people ? $scope.all_people : $scope.assurance_num;        $scope.total_price = $scope.adult_price * $scope.adult_num + $scope.child_price * $scope.child_num + $scope.assurance_price * $scope.assurance_num;    }    /**     *加法操作     */    $scope.addNumberFn = function (arg) {        if (arg === "adult_num") {            $scope.adult_num++        }        if (arg === "child_num") {            $scope.child_num++;        }        if (arg === "assurance_num") {            $scope.assurance_num++;            $scope.assurance_num = $scope.assurance_num > $scope.all_people ? $scope.all_people : $scope.assurance_num;        }        getTotalPric()    }    /**     *减法操作     */    $scope.minusNumberFn = function (arg) {        if (arg === "adult_num") {            $scope.adult_num--            $scope.adult_num = $scope.adult_num <= 1 ? 1 : $scope.adult_num;        }        if (arg === "child_num") {            $scope.child_num--;            $scope.child_num = $scope.child_num < 0 ? 0 : $scope.child_num;        }        if (arg === "assurance_num") {            $scope.assurance_num--;            $scope.assurance_num = $scope.assurance_num < 0 ? 0 : $scope.assurance_num;        }        getTotalPric()    }    /*     * 验证操作     * */    //alert(orderValidateService.phone($scope.phone))    var _Vname=false,_Vphone=false    $scope.bool_submit=false;    $scope.validate = {        Vphone: function (str) {             _Vphone= orderValidateService.phone(str);             $scope.bool_submit=(_Vname&&_Vphone)            return _Vphone        },        Vname: function (str) {            _Vname= orderValidateService.name(str);            $scope.bool_submit=(_Vname&&_Vphone)            return _Vname        }    }    //跳转    $scope.statego = function (url, id) {        pageJumpService.statego(url, id)    }}])

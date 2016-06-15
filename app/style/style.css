@@ -111,7 +111,7 @@ h1,h2,h3,h4,h5,h6{ font-weight: normal; }
 .index-list-foot-mes{ padding: 0.5rem 0px ;}
 .price-tag-mes strong{  font-size: 1.5rem; color: #ff6666; display: block;  margin:0rem 0.5rem 0.5rem;}
 .price-tag-mes strong small{font-size: 1rem;}
-.price-tag-mes span{ display: block; float: left; overflow: hidden; border: #FF6666 solid 1px; margin-left: 0.4rem; padding:0rem 0.1rem ;  height: 1.4rem; line-height: 1.4rem; font-size: 0.7rem; border-radius: 0.7rem; color: #FF6666;}
+.price-tag-mes span{ display: block; float: left; overflow: hidden; border: #FF6666 solid 1px; margin-left: 0.4rem; padding:0rem 0.2rem ;  height: 1.3rem; line-height: 1.3rem; font-size: 0.7rem; border-radius: 0.7rem; color: #FF6666;}
 
 .due_box{ width: 80%;  border: #ffaa50 solid 1px; margin: 0.2rem  auto 0.3rem; text-align: center; overflow: hidden;}
 .due_box h3{  height: 2rem; line-height: 2rem; background: #FFAA50;  color: #FFFFFF;  font-size: 1.2rem; width: 100%;}

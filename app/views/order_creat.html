@@ -1,3 +1,4 @@
+
 <h2 class="section-title">报名信息</h2>
 <div class="box-border order-start-mes clearfix">
     <ul>
@@ -14,10 +15,10 @@
         <li class="clearfix">
             <div class="col-xs-6">儿童:￥{{child_price}}/人</div>
             <div class="col-xs-6 right-action-box">
-                <span class="iconfont icon-jiahao"></span>
+                <span class="iconfont icon-jiahao current" ng-click="addNumberFn('child_num')"></span>
 
                 <div class="text-num">{{child_num}}</div>
-                <span class="iconfont icon-jianhao"></span>
+                <span class="iconfont icon-jianhao" ng-class="{true:'current',false:' '}[child_num!==0]"  ng-click="minusNumberFn('child_num')"></span>
             </div>
         </li>
     </ul>
@@ -29,7 +30,7 @@
         <li class="clearfix">
             <div class="col-xs-6">联系人</div>
             <div class="col-xs-6  right-input">
-                <input type="text" placeholder="请输入联系人姓名"/>
+                <input type="text" placeholder="请输入联系人姓名" ng-model="name"  ng-blur="validate.Vname(name)"  ng-class="{true:'color-red'}[!validate.Vname(name)]" />
 
             </div>
         </li>
@@ -37,7 +38,7 @@
         <li class="clearfix">
             <div class="col-xs-6 ">联系人手机号</div>
             <div class="col-xs-6 right-input">
-                <input type="number" placeholder="请输入手机号"/>
+                <input type="number" placeholder="请输入手机号"  ng-model="phone" ng-blur="validate.Vphone(phone)"  ng-class="{true:'color-red'}[!validate.Vphone(phone)]" />
             </div>
         </li>
     </ul>
@@ -49,10 +50,10 @@
         <li class="clearfix">
             <div class="col-xs-6 ">意外险：<span class="iconfont icon-tip order-start-tips-span"></span>￥80/人</div>
             <div class="col-xs-6 right-action-box">
-                <span class="iconfont icon-jiahao"></span>
+                <span class="iconfont icon-jiahao" ng-class="{true:'current',false:' '}[assurance_num<all_people]" ng-click="addNumberFn('assurance_num')"></span>
 
-                <div class="text-num">1</div>
-                <span class="iconfont icon-jianhao"></span>
+                <div class="text-num">{{assurance_num}}</div>
+                <span class="iconfont icon-jianhao" ng-class="{true:'current',false:' '}[assurance_num!==0]"  ng-click="minusNumberFn('assurance_num')"></span>
             </div>
         </li>
     </ul>
@@ -69,5 +70,5 @@
 <div class="blank2"></div>
 <div class="foot-fixed order-details-footer  pf">
     <div class="col-xs-9">&nbsp;&nbsp;参考价 :<span class="color-red">￥{{total_price}}</span></div>
-    <div class="col-xs-3 order-details-foot-btn go-pay">立即支付</div>
+    <div class="col-xs-3 order-details-foot-btn " ng-class="{ true:'go-pay'}[bool_submit]">立即支付</div>
 </div>
