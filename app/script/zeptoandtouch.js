@@ -30,38 +30,3 @@ Date.prototype.Format = function(fmt) { //author: meizz
 		if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
 	return fmt;
 };
-/*图片懒加载方法*/
-var loadimg = function() {
-	this.img = document.querySelectorAll(".loadimg");
-	this.w_h = window.screen.availHeight;
-	this.datasrc = 'data-src';
-	this.imglength=this.img.length;
-	this.nowi=0;
-}
-loadimg.prototype.scrolladd = function() {
-	var self = this
-	if (self.nowi >= self.img.length ) {
-		return
-	}
-	var _s_t = document.body.scrollTop,
-		_img_t = _s_t + self.w_h + 20
-	for (i = 0; i < self.imglength; i++) {
-		var _this = self.img[i],
-			_datasrc = _this.getAttribute(self.datasrc),
-			_nowsrc = _this.getAttribute('src'),
-			_offtop = _this.offsetTop;
-
-		if (_datasrc != _nowsrc && _img_t > _offtop) {
-			_this.setAttribute('src', _datasrc)
-			self.nowi = i
-		}
-	}
-}
-var _loadnow = new loadimg();
-_loadnow.scrolladd();
-document.body.ontouchmove = function() {
-_loadnow.scrolladd();
-}
-window.onscroll = function() {
-_loadnow.scrolladd();
-}

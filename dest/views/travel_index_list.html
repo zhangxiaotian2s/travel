@@ -1,0 +1,30 @@
+<lazyimglist>
+<ul class="index-list">
+    <li ng-repeat="travellist in  traveListData">
+        <div class="index-list-img pr clearfix"  ng-click="statego( 'details', travellist.uuid )" >
+
+            <img src="images/zwt_600_340.jpg" class=" img-responsive loadimg"  datalazysrc={{travellist.image}}   >
+
+            <div class="pa titlemes">
+                <h2 class="title">{{travellist.title}}</h2>
+                <p class="des">{{travellist.desc}}</p>
+            </div>
+        </div>
+        <div class="row index-list-foot-mes clearfix">
+            <div class="col-xs-8 price-tag-mes">
+                <strong class="price">￥{{travellist.adult_price}}
+                    <small>起</small>
+                </strong>
+                <span ng-repeat="tag in travellist.tags  track by $index">{{tag}}</span>
+            </div>
+            <div class="col-xs-4">
+                <div class="due_box clearfix" ng-click="statego( 'ordercreat', travellist.uuid )">
+                    <h3>立即预定</h3>
+                    <p>已有{{travellist.ordernum}}人预定</p>
+                </div>
+
+            </div>
+        </div>
+    </li>
+</ul>
+</lazyimglist>

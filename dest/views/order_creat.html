@@ -1,0 +1,74 @@
+
+<h2 class="section-title">报名信息</h2>
+<div class="box-border order-start-mes clearfix">
+    <ul>
+        <li class="clearfix">
+            <div class="col-xs-6">成人:￥{{adult_price}}/人</div>
+            <div class="col-xs-6 right-action-box">
+                <span class="iconfont icon-jiahao current" ng-click="addNumberFn('adult_num')"></span>
+
+                <div class="text-num">{{adult_num}}</div>
+                <span class="iconfont icon-jianhao"  ng-class="{true:'current',false:' '}[adult_num!==1]"  ng-click="minusNumberFn('adult_num')"></span>
+            </div>
+        </li>
+        <div class="line"></div>
+        <li class="clearfix">
+            <div class="col-xs-6">儿童:￥{{child_price}}/人</div>
+            <div class="col-xs-6 right-action-box">
+                <span class="iconfont icon-jiahao current" ng-click="addNumberFn('child_num')"></span>
+
+                <div class="text-num">{{child_num}}</div>
+                <span class="iconfont icon-jianhao" ng-class="{true:'current',false:' '}[child_num!==0]"  ng-click="minusNumberFn('child_num')"></span>
+            </div>
+        </li>
+    </ul>
+</div>
+<div class="blank05"></div>
+<h2 class="section-title">联系信息</h2>
+<div class="box-border order-start-mes clearfix">
+    <ul>
+        <li class="clearfix">
+            <div class="col-xs-6">联系人</div>
+            <div class="col-xs-6  right-input">
+                <input type="text" placeholder="请输入联系人姓名" ng-model="name"  ng-blur="validate.Vname(name)"  ng-class="{true:'color-red'}[!validate.Vname(name)]" />
+
+            </div>
+        </li>
+        <div class="line"></div>
+        <li class="clearfix">
+            <div class="col-xs-6 ">联系人手机号</div>
+            <div class="col-xs-6 right-input">
+                <input type="number" placeholder="请输入手机号"  ng-model="phone" ng-blur="validate.Vphone(phone)"  ng-class="{true:'color-red'}[!validate.Vphone(phone)]" />
+            </div>
+        </li>
+    </ul>
+</div>
+<div class="blank05"></div>
+<h2 class="section-title">选择保险</h2>
+<div class="box-border order-start-mes clearfix">
+    <ul>
+        <li class="clearfix">
+            <div class="col-xs-6 ">意外险：<span class="iconfont icon-tip order-start-tips-span"></span>￥80/人</div>
+            <div class="col-xs-6 right-action-box">
+                <span class="iconfont icon-jiahao" ng-class="{true:'current',false:' '}[assurance_num<all_people]" ng-click="addNumberFn('assurance_num')"></span>
+
+                <div class="text-num">{{assurance_num}}</div>
+                <span class="iconfont icon-jianhao" ng-class="{true:'current',false:' '}[assurance_num!==0]"  ng-click="minusNumberFn('assurance_num')"></span>
+            </div>
+        </li>
+    </ul>
+</div>
+<div class="blank1"></div>
+<div class="pay-end-ts-bottom">
+    <p><span class="iconfont icon-tip"></span>温馨提示：<br/>&nbsp;&nbsp;&nbsp; 请确保您已阅读费用说明和购买须知。提交订单后将有
+        客服专员和您联系，确认订单信息，请保持您所填写的电 话处于畅通状态
+        <br/> &nbsp;&nbsp;&nbsp; 由于最终价格受季节、人数、个人选择等因素影响，下 方价格仅供参考，最终价格以您与客服人员沟通结果为准。
+    </p>
+</div>
+
+<div class="blank2"></div>
+<div class="blank2"></div>
+<div class="foot-fixed order-details-footer  pf">
+    <div class="col-xs-9">&nbsp;&nbsp;参考价 :<span class="color-red">￥{{total_price}}</span></div>
+    <div class="col-xs-3 order-details-foot-btn " ng-class="{ true:'go-pay'}[bool_submit]">立即支付</div>
+</div>
