@@ -6,22 +6,51 @@ var travelDirceitve = angular.module('travelDirectiveModule', ['travelListModule
 /*
  * 图片懒加载
  * */
-travelDirceitve.directive("imglazyload", function () {
+travelDirceitve.directive("lazyimglist", ['$timeout', function ($timeout) {
     return {
-        restrict: 'A',
+        restrict: 'E',
         replace: false,
-        scope: {},
-        //template: '<img ng-src={{travellist.image}}   class="lazyimg img-responsive" >',
         link: function (scope, element, attrs) {
-            var lazyimg = angular.element(element)
+            /*图片懒加载方法*/
+            var loadimg = function () {
+                this.img = document.querySelectorAll(".loadimg");
+                this.w_h =document.documentElement.clientHeight ;
+                this.datasrc = 'datalazysrc';
+                this.imglength = this.img.length;
+                this.nowi = 0;
+            }
+            loadimg.prototype.scrolladd = function () {
+                var self = this
+                if (self.nowi >= self.img.length-1) {
+                    return
+                }
+                var _s_t = document.body.scrollTop,
+                    _img_t = _s_t + self.w_h + 20
+                for (i =self.nowi ; i < self.imglength; i++) {
 
-            //for(var i=0;i<lazyimg.length;i++){
-            lazyimg.attr('src', attrs.datalazysrc)
-            //}
-            console.log(attrs.datalazysrc)
+                    var _this = self.img[i],
+                        _datasrc = _this.getAttribute(self.datasrc),
+                        _nowsrc = _this.getAttribute('src'),
+                        _offtop = _this.parentNode.offsetTop;
+                    if (_datasrc != _nowsrc && _img_t > _offtop) {
+                        _this.setAttribute('src', _datasrc)
+                        self.nowi = i
+                    }
+                }
+            }
+            $timeout(function () {
+                var _loadnow = new loadimg();
+                _loadnow.scrolladd();
+                document.body.ontouchmove = function () {
+                    _loadnow.scrolladd();
+                }
+                window.onscroll = function () {
+                    _loadnow.scrolladd();
+                }
+            },1000)
         }
     }
-})
+}])
 /*
  *详情页banner
  * */
@@ -108,9 +137,7 @@ travelDirceitve.directive("banner", ['$timeout', function ($timeout) {
                 banner.init()
             });
 
-            //touch.on('#banner-ul','swiperight', function () {
-            //    console.log(banner.bannerbox.width())
-            //})
+
 
         }
     }
