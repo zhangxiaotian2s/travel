@@ -47,7 +47,7 @@ travelDirceitve.directive("lazyimglist", ['$timeout', function ($timeout) {
                 window.onscroll = function () {
                     _loadnow.scrolladd();
                 }
-            },1000)
+            })
         }
     }
 }])
