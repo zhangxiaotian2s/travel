@@ -8,11 +8,11 @@ var travelServiceModule = angular.module('travelServiceModule', []);
 * 获取旅游列表
 * */
 travelServiceModule.service('travelIndexListService', function ($http) {
-    var self=this
-    this.index_list_api='http://192.168.3.130:9393/v10/tourism/travels/show.json?uuid='
-    this.traveListGet = function (uuid) {
+    var self=this;
+    var index_list_api='http://api.development.mastergolf.cn/v10/tourism/travels.json';
+    this.traveListGet = function () {
       return  $http({
-            url: self.index_list_api+uuid,
+            url: index_list_api,
             method: 'GET'
         })
     }
@@ -22,24 +22,25 @@ travelServiceModule.service('travelIndexListService', function ($http) {
  */
 
 travelServiceModule.service('travelDetailsService', function ($http) {
-    var self=this
-    this.travel_details_api='http://192.168.3.130:9393/v10/tourism/travels/show.json?uuid='
-    this.traveListGet = function (uuid) {
+    var self=this;
+    var travel_details_api='http://api.development.mastergolf.cn/v10/tourism/travels/show.json?uuid='
+    this.traveDetailsGet = function (uuid) {
         return  $http({
-            url: self.travel_details_api+uuid,
+            url: travel_details_api+uuid,
             method: 'GET'
         })
     }
 });
-
 /*
 * 订单创建
  */
+
 travelServiceModule.service('orderCreatService', function ($http) {
-    this.ajaxSubmit= function (url,data) {
+    var ajax_submit_url='http://api.development.mastergolf.cn/v10/tourism/orders/create.json'
+    this.ajaxSubmit= function (data) {
         return  $http({
             method  : 'POST',
-            url : url,
+            url : ajax_submit_url,
             data  : data
         })
     }
@@ -58,7 +59,7 @@ travelServiceModule.service('pageJumpService',['$state',function ($state) {
 }]);
 
 /*
-* 表单提交
+* 表单验证
 * */
 travelServiceModule.factory('orderValidateService', ['$http',function ($http) {
 
@@ -70,9 +71,22 @@ travelServiceModule.factory('orderValidateService', ['$http',function ($http) {
             return /^0{0,1}(13[0-9]|15[7-9]|153|156|18[7-9])[0-9]{8}$/.test(str);
         }
 
-    }
+    };
     return validate
 }]);
+
+/*
+* 信息提示
+* */
+travelServiceModule.service('promptService', ['$timeout',function ($timeout) {
+    this.promit=function() {
+        var _html = '<p class="pf" style="top:0px">xxxxxx</p>';
+         document.body.innerHTML+=_html;
+    }
+
+
+}]);
+
 
 
 
@@ -89,11 +103,12 @@ var travelDirceitve = angular.module('travelDirectiveModule', ['travelListModule
  * */
 travelDirceitve.directive("lazyimglist", ['$timeout', function ($timeout) {
     return {
-        restrict: 'E',
+        restrict: 'AE',
         replace: false,
         link: function (scope, element, attrs) {
             /*图片懒加载方法*/
-            var loadimg = function () {
+
+            function loadimg () {
                 this.img = document.querySelectorAll(".loadimg");
                 this.w_h =document.documentElement.clientHeight ;
                 this.datasrc = 'datalazysrc';
@@ -101,48 +116,46 @@ travelDirceitve.directive("lazyimglist", ['$timeout', function ($timeout) {
                 this.nowi = 0;
             }
             loadimg.prototype.scrolladd = function () {
-                var self = this
+                var self = this;
                 if (self.nowi >= self.img.length-1) {
                     return
                 }
                 var _s_t = document.body.scrollTop,
-                    _img_t = _s_t + self.w_h + 20
+                    _img_t = _s_t + self.w_h + 20;
                 for (i =self.nowi ; i < self.imglength; i++) {
-
                     var _this = self.img[i],
                         _datasrc = _this.getAttribute(self.datasrc),
                         _nowsrc = _this.getAttribute('src'),
                         _offtop = _this.parentNode.offsetTop;
                     if (_datasrc != _nowsrc && _img_t > _offtop) {
-                        _this.setAttribute('src', _datasrc)
-                        self.nowi = i
+                        _this.setAttribute('src', _datasrc);
+                        self.nowi = i;
                     }
                 }
+            };
+            if(scope.$last == true){
+                $timeout( function () {
+                    var _loadnow = new loadimg();
+                    _loadnow.scrolladd();
+                    window.onscroll = function () {
+                        _loadnow.scrolladd();
+                    };
+                })
             }
-            $timeout(function () {
-                var _loadnow = new loadimg();
-                _loadnow.scrolladd();
-                document.body.ontouchmove = function () {
-                    _loadnow.scrolladd();
-                }
-                window.onscroll = function () {
-                    _loadnow.scrolladd();
-                }
-            })
         }
     }
-}])
+}]);
 /*
  *详情页banner
  * */
 
 
-travelDirceitve.directive("banner", ['$timeout', function ($timeout) {
+travelDirceitve.directive("bannerli", ['$timeout', function ($timeout) {
     return {
-        restrict: 'E',
+        restrict: 'A',
         replace: false,
-        link: function (attrs, element, attrs) {
-            function banner(number) {
+        link: function (scope, element, attrs) {
+            function Banner(number) {
                 this.bannerbox = $('#bannerbox');
                 this.bannerid = '#bannerbox';
                 this.li_width = this.bannerbox.width();
@@ -152,18 +165,15 @@ travelDirceitve.directive("banner", ['$timeout', function ($timeout) {
                 this.evx = 0;
                 this.timer = null;
             };
-            banner.prototype.init = function () {
-                var self = this
-                self.banner_li = self.banner_ul.children('li')
+            Banner.prototype.init = function () {
+                var self = this;
+                self.banner_li = self.banner_ul.children('li');
                 self.li_length = self.banner_ul.children('li').length;
                 self.banner_li.css('width', self.li_width + 'px');
-                //自动化
-                self.bannerAuto()
-                //清除掉默认事件
+                self.bannerAuto();
                 touch.on(self.bannerid, 'touchstart', function (ev) {
                     ev.preventDefault();
                 });
-                //拖动状态处理
                 touch.on(self.bannerid, 'drag', function (ev) {
                     clearInterval(self.timer);
                     var _offx = -self.index * self.li_width + ev.x;
@@ -191,7 +201,7 @@ travelDirceitve.directive("banner", ['$timeout', function ($timeout) {
 
             };
 
-            banner.prototype.bannerAction = function (offx) {
+            Banner.prototype.bannerAction = function (offx) {
                 var self = this;
                 self.banner_ul.css({
                     '-webkit-transition': '0.5s  linear',
@@ -200,7 +210,7 @@ travelDirceitve.directive("banner", ['$timeout', function ($timeout) {
                     'transform': 'translate3d(' + offx + 'px,0,0)'
                 })
             };
-            banner.prototype.bannerAuto = function () {
+            Banner.prototype.bannerAuto = function () {
                 var self = this;
                 self.timer = setInterval(function () {
                     self.index++;
@@ -210,20 +220,17 @@ travelDirceitve.directive("banner", ['$timeout', function ($timeout) {
                     _offx = -self.index * self.li_width;
                     self.bannerAction(_offx)
                 }, 3000)
+            };
+            if(scope.$last == true){
+                $timeout( function () {
+                    var banner = new Banner();
+                    banner.init();
+                })
             }
-
-            var banner = new banner()
-
-            $timeout(function () {
-                banner.init()
-            });
-
-
-
         }
     }
 
-}])
+}]);
 
 
 
@@ -239,163 +246,71 @@ travelFilterModule.filter('trustHtml',[ '$sce',function ($sce) {
         return $sce.trustAsHtml(input);
     }
 }]);
-/**
- * Created by 50683 on 2016/6/14.
- */
-var orderCreatModule = angular.module('orderCreatModule', ['travelServiceModule'])
-
-orderCreatModule.controller('orderCreatCtrl', ['$scope', 'orderCreatService', 'orderValidateService', function ($scope, orderCreatService, orderValidateService) {
-
-    $scope.adult_price = 9980.0;
-    $scope.child_price = 4880.0;
-    $scope.adult_num = 1;
-    $scope.child_num = 0;
-    $scope.name = '';
-    $scope.phone = '';
-    $scope.assurance_price = 80;
-    $scope.assurance_num = 0;
-    $scope.all_people = 1;
-    $scope.total_price = $scope.adult_price * $scope.adult_num + $scope.child_price * $scope.child_num + $scope.assurance_price * $scope.assurance_num;
-
-    /*
-     * 计算
-     * */
-    var getTotalPric = function () {
-        $scope.all_people = $scope.adult_num + $scope.child_num;
-        $scope.assurance_num = $scope.assurance_num > $scope.all_people ? $scope.all_people : $scope.assurance_num;
-        $scope.total_price = $scope.adult_price * $scope.adult_num + $scope.child_price * $scope.child_num + $scope.assurance_price * $scope.assurance_num;
-    }
-
-    /**
-     *加法操作
-     */
-    $scope.addNumberFn = function (arg) {
-        if (arg === "adult_num") {
-            $scope.adult_num++
-        }
-        if (arg === "child_num") {
-            $scope.child_num++;
-        }
-        if (arg === "assurance_num") {
-            $scope.assurance_num++;
-
-            $scope.assurance_num = $scope.assurance_num > $scope.all_people ? $scope.all_people : $scope.assurance_num;
-        }
-        getTotalPric()
-    }
-
-    /**
-     *减法操作
-     */
-    $scope.minusNumberFn = function (arg) {
-        if (arg === "adult_num") {
-            $scope.adult_num--
-            $scope.adult_num = $scope.adult_num <= 1 ? 1 : $scope.adult_num;
-        }
-        if (arg === "child_num") {
-            $scope.child_num--;
-            $scope.child_num = $scope.child_num < 0 ? 0 : $scope.child_num;
-        }
-        if (arg === "assurance_num") {
-            $scope.assurance_num--;
-            $scope.assurance_num = $scope.assurance_num < 0 ? 0 : $scope.assurance_num;
-        }
-        getTotalPric()
-    }
-
-    /*
-     * 验证操作
-     * */
-    //alert(orderValidateService.phone($scope.phone))
-    var _Vname=false,_Vphone=false
-    $scope.bool_submit=false;
-    $scope.validate = {
-        Vphone: function (str) {
-             _Vphone= orderValidateService.phone(str);
-             $scope.bool_submit=(_Vname&&_Vphone)
-            return _Vphone
-        },
-        Vname: function (str) {
-            _Vname= orderValidateService.name(str);
-            $scope.bool_submit=(_Vname&&_Vphone)
-            return _Vname
-        }
-
-    }
-
-
-
-    //跳转
-    $scope.statego = function (url, id) {
-        pageJumpService.statego(url, id)
-    }
-
-}])
+/** * Created by 50683 on 2016/6/14. */var orderCreatModule = angular.module('orderCreatModule', ['travelServiceModule']);orderCreatModule.controller('orderCreatCtrl', ['$scope', '$state', '$stateParams', '$cookieStore', 'travelDetailsService', 'orderCreatService', 'orderValidateService','promptService', function ($scope, $state, $stateParams, $cookieStore, travelDetailsService, orderCreatService, orderValidateService,promptService) {    $scope.parseInt=parseInt;    $cookieStore.put('user_uuid', '5734fda9-61c6-42b4-82ce-b1314e291bbd');    $cookieStore.put('token', '63bae8001c7b61f6d14b5bed19c912be');    var user_uuid= $cookieStore.get('user_uuid'),           user_token=$cookieStore.get('token');     if(!user_token || !user_uuid){      var _location_url=window.location.href;       window.location.href='mastergolf://mastergolf.cn/user/login?url='+_location_url+'';     }    $scope.travleDetailsData ='';    $scope.adult_count = 1;    $scope.child_count = 0;    $scope.link_man = '';    $scope.phone = '';    $scope.insurance_count = 0;    $scope.all_people = 1;    travelDetailsService.traveDetailsGet($stateParams.uuid).success(function (data, header, config, status) {        $scope.travleDetailsData = data.data;        $scope.adult_price = parseInt($scope.travleDetailsData.adult_price)||0;        $scope.child_price =parseInt( $scope.travleDetailsData.child_price)||0;        $scope.assurance_price =parseInt($scope.travleDetailsData.assurance_price)||0;        $scope.total_price = $scope.adult_price * $scope.adult_count + $scope.child_price * $scope.child_count + $scope.assurance_price * $scope.insurance_count;    });    /*     * 计算     * */    var getTotalPric = function () {        $scope.all_people = $scope.adult_count + $scope.child_count;        $scope.insurance_count = $scope.insurance_count > $scope.all_people ? $scope.all_people : $scope.insurance_count;        $scope.total_price = $scope.adult_price * $scope.adult_count + $scope.child_price * $scope.child_count + $scope.assurance_price * $scope.insurance_count;    };    /**     *加法操作     */    $scope.addNumberFn = function (argtext) {        if (argtext === "adult_count") {            $scope.adult_count++;        }        if (argtext === "child_count") {            $scope.child_count++;        }        if (argtext === "insurance_count") {            $scope.insurance_count++;            $scope.insurance_count = $scope.insurance_count > $scope.all_people ? $scope.all_people : $scope.insurance_count;        }        getTotalPric();    };    /**     *减法操作     */    $scope.minusNumberFn = function (argtext) {        if (argtext === "adult_count") {            $scope.adult_count--;            $scope.adult_count = $scope.adult_count <= 1 ? 1 : $scope.adult_count;        }        if (argtext === "child_count") {            $scope.child_count--;            $scope.child_count = $scope.child_count < 0 ? 0 : $scope.child_count;        }        if (argtext === "insurance_count") {            $scope.insurance_count--;            $scope.insurance_count = $scope.insurance_count < 0 ? 0 : $scope.insurance_count;        }        getTotalPric()    };    /*     * 验证操作     * */    var _Vname = false, _Vphone = false;    $scope.bool_submit = false;    $scope.validate = {        Vphone: function (str) {            _Vphone = orderValidateService.phone(str);            $scope.bool_submit = (_Vname && _Vphone);            return _Vphone        },        Vname: function (str) {            _Vname = orderValidateService.name(str);            $scope.bool_submit = (_Vname && _Vphone);            return _Vname        }    };    /*    * 提交订单    * */    $scope.submitOrder= function () {           if(!$scope.bool_submit){                return           }        orderCreatService.ajaxSubmit({            uuid:$stateParams.uuid,            user_uuid:user_uuid,            token:user_token,            adult_count:$scope.adult_count,            child_count:$scope.child_count,            link_man:$scope.link_man,            phone:$scope.phone,            insurance_count:$scope.insurance_count        }).success(function (data, header, config, status) {             if(data.data.state==="OK"){             }else{             }        })    };    $scope.statego = function (url, id) {        pageJumpService.statego(url, id);    };}]);
 /**
  * Created by 50683 on 2016/6/13.
  */
 var travelDetailsModule = angular.module('travelDetailsModule', ['travelServiceModule','travelFilterModule']);
 
-travelDetailsModule.controller('travelDetailsCtrl', ['$scope', 'travelDetailsService','pageJumpService', function ($scope, travelDetailsService,pageJumpService) {
-    $scope.travleDetailsData = {
-        "uuid": "1cc6172e-304c-11e6-9f65-7736acbdaf33",
-        "country": "中国",
-        "city": null,
-        "title": "秦皇岛",
-        "desc": "吃(keng)~喝(meng)~玩(guai)~乐(pian)",
-        "adult_price": "10000.0",
-        "child_price": "99.0",
-        "ordernum": 0,
-        "content_characteristic": "<p>\r\n\t有公主你懂得！\r\n</p>\r\n<p>\r\n\t晚上逛夜市、早晨看日出\r\n</p>",
-        "content_plan": "第一天早晨5点东直门集合，9点到住宿地安排住宿，10点到达金沙湾海滨公园（可以叫公主（可以带走）一起）玩水，中午午餐自理（泡面30元一桶）",
-        "content_fee": "包含车费，门票晚饭自理<br />",
-        "content_notice": "买二赠一公主，买三赠两公主，买的多送得多",
-        "tags": [
-            "皮皮虾",
-            "金沙湾",
-            "滑沙",
-            "日出"
-        ],
-        "images": [
-            {
-                "image": "http://image-staging.mastergolf.cn/assets/3fffc05903c29faaf6410f61a952418a@1e_720w_405h_1c_0i_1o_80Q_1x.jpg"
-            },
-            {
-                "image": "http://7xl619.com1.z0.glb.clouddn.com/1.jpg"
-            },
-            {
-                "image": "http://7xl619.com1.z0.glb.clouddn.com/2.jpg"
-            },
-            {
-                "image": "http://7xl619.com1.z0.glb.clouddn.com/3.jpg"
-            }
-        ]
-    }
+travelDetailsModule.controller('travelDetailsCtrl', ['$scope','$state' ,'$stateParams','travelDetailsService','pageJumpService', function ($scope,$state,$stateParams, travelDetailsService,pageJumpService) {
 
+     travelDetailsService.traveDetailsGet($stateParams.uuid).success(function (data, header, config, status) {
+         $scope.travleDetailsData=data.data;
+    });
 
     $scope.statego=function(url,id){
-        pageJumpService.statego(url,id)
+        pageJumpService.statego(url,id);
     }
-
-
-
 }])
 /**
  * Created by 50683 on 2016/6/8.
  */
 var travelListModule = angular.module('travelListModule', ['travelServiceModule']);
 
-travelListModule.controller('travelIndexListCtrl', ['$scope', '$state','travelIndexListService','pageJumpService', function ($scope, $state,travelIndexListService,pageJumpService) {
-    $scope.tab=1;
-    $scope.traveListData = ""
-    // travelIndexListService.traveListGet('1cc6172e-304c-11e6-9f65-7736acbdaf33').success(function(data,header,config,status){
-    //     console.log(header)
-    //      $scope.traveListData=data.data;
-    //}).error(function(data,header,config,status){
-    //
-    // })
-    $scope.statego=function(url,id){
-        pageJumpService.statego(url,id)
+travelListModule.controller('travelIndexListCtrl', ['$scope', '$state', 'travelIndexListService', 'pageJumpService', function ($scope, $state, travelIndexListService, pageJumpService) {
+    $scope.tab = 1;
+
+    travelIndexListService.traveListGet().success(function (data, header, config, status) {
+        $scope.traveListData = data.data;
+    }).error(function (data, header, config, status) {
+
+    });
+
+
+    $scope.statego = function (url, id) {
+        pageJumpService.statego(url, id);
     }
 
-}])
+}]);
+/**
+ * Created by zhangxiaotian on 16/6/5.
+ */
+var travelApp = angular.module('travelApp', ['ui.router', 'ngTouch','ngAnimate','ngCookies','travelListModule','travelServiceModule','travelDirectiveModule','travelDetailsModule','travelFilterModule','orderCreatModule']);
+/**
+ * 由于整个应用都会和路由打交道，所以这里把$state和$stateParams这两个对象放到$rootScope上，方便其它地方引用和注入。
+ */
+travelApp.run(function ($rootScope, $state, $stateParams) {
+    $rootScope.$state = $state;
+    $rootScope.$stateParams = $stateParams;
+    $rootScope.tab=1;
+
+});
+travelApp.config(function ($stateProvider, $urlRouterProvider) {
+    $urlRouterProvider.otherwise('/index');
+    $stateProvider
+        .state('index', {
+            url: '/index',
+            templateUrl: 'views/travel_index_list.html',
+            controller:'travelIndexListCtrl'
+        })
+        .state('details', {
+            url: '/details/:uuid',
+            templateUrl: 'views/travel_details.html',
+            controller: 'travelDetailsCtrl'
+        })
+        .state('ordercreat', {
+            url: '/ordercreat/:uuid',
+            templateUrl: 'views/order_creat.html',
+            controller: 'orderCreatCtrl'
+        })
+});

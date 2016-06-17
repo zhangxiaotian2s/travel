@@ -20,15 +20,16 @@ module.exports = function (grunt) {
       },
       basic_and_extras: {
         files: {
-          'dest/script/angular.js': ['app/angular/angular.js', 'app/angular/angular-ui-router.js', 'app/angular/angular-touch.js','app/angular/angular-animate.js'],
-          'dest/script/script.js': ['app/script/service/*.js','app/script/directive/*.js','app/script/filter/*.js','app/script/controller/*.js'],
+          'dest/script/angular.js': ['app/angular/angular.js', 'app/angular/angular-touch.js','app/angular/angular-animate.js','app/angular/angular-cookies.js','app/angular/angular-ui-router.js'],
+          'dest/script/script.js': ['app/script/service/*.js','app/script/directive/*.js','app/script/filter/*.js','app/script/controller/*.js','app/script/app.js'],
         }
       }
     },
      uglify: {
       my_target: {
         files: {
-          'dest/script/script.min.js': ['dest/script/angular.js','dest/script/app.js','dest/script/script.js']
+          'dest/script/angular.min.js': ['dest/script/angular.js'],
+            'dest/script/script.min.js':['dest/script/script.js']
         }
       }
     }

@@ -23,7 +23,7 @@ html{font-size:10px}
 }
 
 /*常用配置*/
-.wrap{ max-width: 640px; margin: auto;}
+.wrap{ max-width: 640px; margin: auto; width: 100%}
 .clearfix:after {
     content: ".";
     display: block;
@@ -180,7 +180,7 @@ h1,h2,h3,h4,h5,h6{ font-weight: normal; }
 .travel-banner-title p{ line-height: 1.8rem;  color: #CCCCCC;  }
 .travel-banner-title p span{display: block; float: right;}
 
-.travel-details-content{ background: #FFFFFF;  border-top: #CCCCCC solid 1px;}
+.travel-details-content{ background: #FFFFFF;  border-top: #CCCCCC solid 1px; width: 100%; overflow: hidden}
 .travel-details-content-nav  { border-bottom: #CCCCCC solid 1px;}
 .travel-details-content-nav  ul li{ text-align: center;  line-height: 3rem; box-sizing: border-box;  }
 .travel-details-content-nav  ul li.current{border-bottom: #FF6666 solid 2px;}

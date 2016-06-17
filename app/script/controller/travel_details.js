@@ -10,6 +10,6 @@ travelDetailsModule.controller('travelDetailsCtrl', ['$scope','$state' ,'$stateP
     });
 
     $scope.statego=function(url,id){
-        pageJumpService.statego(url,id)
+        pageJumpService.statego(url,id);
     }
 }])

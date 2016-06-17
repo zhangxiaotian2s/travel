@@ -14,7 +14,7 @@ travelListModule.controller('travelIndexListCtrl', ['$scope', '$state', 'travelI
 
 
     $scope.statego = function (url, id) {
-        pageJumpService.statego(url, id)
+        pageJumpService.statego(url, id);
     }
 
 }]);
