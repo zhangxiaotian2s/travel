@@ -2,7 +2,7 @@
 /**
  * Created by zhangxiaotian on 16/6/5.
  */
-var travelServiceModule = angular.module('travelServiceModule', [])
+var travelServiceModule = angular.module('travelServiceModule', []);
 
 /*
 * 获取旅游列表
@@ -16,7 +16,7 @@ travelServiceModule.service('travelIndexListService', function ($http) {
             method: 'GET'
         })
     }
-})
+});
 /**
  * 旅游详情内容
  */
@@ -30,7 +30,8 @@ travelServiceModule.service('travelDetailsService', function ($http) {
             method: 'GET'
         })
     }
-})
+});
+
 /*
 * 订单创建
  */
@@ -42,8 +43,7 @@ travelServiceModule.service('orderCreatService', function ($http) {
             data  : data
         })
     }
-
-})
+});
 
 /*
 * 页面跳转
@@ -55,7 +55,7 @@ travelServiceModule.service('pageJumpService',['$state',function ($state) {
             uuid: id
         })
     };
-}])
+}]);
 
 /*
 * 表单提交
@@ -72,7 +72,7 @@ travelServiceModule.factory('orderValidateService', ['$http',function ($http) {
 
     }
     return validate
-}])
+}]);
 
 
 

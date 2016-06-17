@@ -1,48 +1,49 @@
 /**
  * Created by zhangxiaotian on 16/6/5.
  */
-var travelServiceModule = angular.module('travelServiceModule', [])
+var travelServiceModule = angular.module('travelServiceModule', []);
 
 /*
 * 获取旅游列表
 * */
 travelServiceModule.service('travelIndexListService', function ($http) {
-    var self=this
-    this.index_list_api='http://192.168.3.130:9393/v10/tourism/travels/show.json?uuid='
-    this.traveListGet = function (uuid) {
+    var self=this;
+    var index_list_api='http://api.development.mastergolf.cn/v10/tourism/travels.json';
+    this.traveListGet = function () {
       return  $http({
-            url: self.index_list_api+uuid,
+            url: index_list_api,
             method: 'GET'
         })
     }
-})
+});
 /**
  * 旅游详情内容
  */
 
 travelServiceModule.service('travelDetailsService', function ($http) {
-    var self=this
-    this.travel_details_api='http://192.168.3.130:9393/v10/tourism/travels/show.json?uuid='
-    this.traveListGet = function (uuid) {
+    var self=this;
+    var travel_details_api='http://api.development.mastergolf.cn/v10/tourism/travels/show.json?uuid='
+    this.traveDetailsGet = function (uuid) {
         return  $http({
-            url: self.travel_details_api+uuid,
+            url: travel_details_api+uuid,
             method: 'GET'
         })
     }
-})
+});
 /*
 * 订单创建
  */
+
 travelServiceModule.service('orderCreatService', function ($http) {
-    this.ajaxSubmit= function (url,data) {
+    var ajax_submit_url='http://api.development.mastergolf.cn/v10/tourism/orders/create.json'
+    this.ajaxSubmit= function (data) {
         return  $http({
             method  : 'POST',
-            url : url,
+            url : ajax_submit_url,
             data  : data
         })
     }
-
-})
+});
 
 /*
 * 页面跳转
@@ -54,10 +55,10 @@ travelServiceModule.service('pageJumpService',['$state',function ($state) {
             uuid: id
         })
     };
-}])
+}]);
 
 /*
-* 表单提交
+* 表单验证
 * */
 travelServiceModule.factory('orderValidateService', ['$http',function ($http) {
 
@@ -69,9 +70,22 @@ travelServiceModule.factory('orderValidateService', ['$http',function ($http) {
             return /^0{0,1}(13[0-9]|15[7-9]|153|156|18[7-9])[0-9]{8}$/.test(str);
         }
 
-    }
+    };
     return validate
-}])
+}]);
+
+/*
+* 信息提示
+* */
+travelServiceModule.service('promptService', ['$timeout',function ($timeout) {
+    this.promit=function() {
+        var _html = '<p class="pf" style="top:0px">xxxxxx</p>';
+         document.body.innerHTML+=_html;
+    }
+
+
+}]);
+
 
 
 

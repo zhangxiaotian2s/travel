@@ -8,11 +8,12 @@ var travelDirceitve = angular.module('travelDirectiveModule', ['travelListModule
  * */
 travelDirceitve.directive("lazyimglist", ['$timeout', function ($timeout) {
     return {
-        restrict: 'E',
+        restrict: 'AE',
         replace: false,
         link: function (scope, element, attrs) {
             /*图片懒加载方法*/
-            var loadimg = function () {
+
+            function loadimg () {
                 this.img = document.querySelectorAll(".loadimg");
                 this.w_h =document.documentElement.clientHeight ;
                 this.datasrc = 'datalazysrc';
@@ -20,48 +21,46 @@ travelDirceitve.directive("lazyimglist", ['$timeout', function ($timeout) {
                 this.nowi = 0;
             }
             loadimg.prototype.scrolladd = function () {
-                var self = this
+                var self = this;
                 if (self.nowi >= self.img.length-1) {
                     return
                 }
                 var _s_t = document.body.scrollTop,
-                    _img_t = _s_t + self.w_h + 20
+                    _img_t = _s_t + self.w_h + 20;
                 for (i =self.nowi ; i < self.imglength; i++) {
-
                     var _this = self.img[i],
                         _datasrc = _this.getAttribute(self.datasrc),
                         _nowsrc = _this.getAttribute('src'),
                         _offtop = _this.parentNode.offsetTop;
                     if (_datasrc != _nowsrc && _img_t > _offtop) {
-                        _this.setAttribute('src', _datasrc)
+                        _this.setAttribute('src', _datasrc);
                         self.nowi = i
                     }
                 }
+            };
+            if(scope.$last == true){
+                $timeout( function () {
+                    var _loadnow = new loadimg();
+                    _loadnow.scrolladd();
+                    window.onscroll = function () {
+                        _loadnow.scrolladd();
+                    };
+                })
             }
-            $timeout(function () {
-                var _loadnow = new loadimg();
-                _loadnow.scrolladd();
-                document.body.ontouchmove = function () {
-                    _loadnow.scrolladd();
-                }
-                window.onscroll = function () {
-                    _loadnow.scrolladd();
-                }
-            })
         }
     }
-}])
+}]);
 /*
  *详情页banner
  * */
 
 
-travelDirceitve.directive("banner", ['$timeout', function ($timeout) {
+travelDirceitve.directive("bannerli", ['$timeout', function ($timeout) {
     return {
-        restrict: 'E',
+        restrict: 'A',
         replace: false,
-        link: function (attrs, element, attrs) {
-            function banner(number) {
+        link: function (scope, element, attrs) {
+            function Banner(number) {
                 this.bannerbox = $('#bannerbox');
                 this.bannerid = '#bannerbox';
                 this.li_width = this.bannerbox.width();
@@ -71,13 +70,13 @@ travelDirceitve.directive("banner", ['$timeout', function ($timeout) {
                 this.evx = 0;
                 this.timer = null;
             };
-            banner.prototype.init = function () {
-                var self = this
-                self.banner_li = self.banner_ul.children('li')
+            Banner.prototype.init = function () {
+                var self = this;
+                self.banner_li = self.banner_ul.children('li');
                 self.li_length = self.banner_ul.children('li').length;
                 self.banner_li.css('width', self.li_width + 'px');
                 //自动化
-                self.bannerAuto()
+                self.bannerAuto();
                 //清除掉默认事件
                 touch.on(self.bannerid, 'touchstart', function (ev) {
                     ev.preventDefault();
@@ -110,7 +109,7 @@ travelDirceitve.directive("banner", ['$timeout', function ($timeout) {
 
             };
 
-            banner.prototype.bannerAction = function (offx) {
+            Banner.prototype.bannerAction = function (offx) {
                 var self = this;
                 self.banner_ul.css({
                     '-webkit-transition': '0.5s  linear',
@@ -119,7 +118,7 @@ travelDirceitve.directive("banner", ['$timeout', function ($timeout) {
                     'transform': 'translate3d(' + offx + 'px,0,0)'
                 })
             };
-            banner.prototype.bannerAuto = function () {
+            Banner.prototype.bannerAuto = function () {
                 var self = this;
                 self.timer = setInterval(function () {
                     self.index++;
@@ -129,20 +128,17 @@ travelDirceitve.directive("banner", ['$timeout', function ($timeout) {
                     _offx = -self.index * self.li_width;
                     self.bannerAction(_offx)
                 }, 3000)
+            };
+            if(scope.$last == true){
+                $timeout( function () {
+                    var banner = new Banner();
+                    banner.init()
+                })
             }
-
-            var banner = new banner()
-
-            $timeout(function () {
-                banner.init()
-            });
-
-
-
         }
     }
 
-}])
+}]);
 
 
 
