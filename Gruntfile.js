@@ -9,6 +9,8 @@ module.exports = function (grunt) {
         {expand: true,cwd: 'app', src: ['style/**'], dest: 'dest' },
         {expand: true,cwd: 'app', src: ['views/**'], dest: 'dest' },
         {expand: true,cwd: 'app', src: ['index.html'], dest: 'dest' },
+        {expand: true,cwd: 'app', src: ['script/app.js'], dest: 'dest' },
+        {expand: true,cwd: 'app', src: ['script/zeptoandtouch.js'], dest: 'dest' }
      ]
      }
     },
@@ -18,15 +20,16 @@ module.exports = function (grunt) {
       },
       basic_and_extras: {
         files: {
-          'dest/angular.js': ['app/angular/angular.js', 'app/angular/angular-ui-router.js', 'app/angular/angular-touch.js','app/angular/angular-animate.js'],
-          'dest/script.js': ['app/script/service/*.js','app/script/directive/*.js','app/script/filter/*.js','app/script/controller/*.js'],
+          'dest/script/angular.js': ['app/angular/angular.js', 'app/angular/angular-ui-router.js', 'app/angular/angular-touch.js','app/angular/angular-animate.js'],
+          'dest/script/script.js': ['app/script/service/*.js','app/script/directive/*.js','app/script/filter/*.js','app/script/controller/*.js'],
         }
       }
     },
-    uglify: {
-      build: {
-        src: 'dest/angular.js',
-        dest: 'dest/angular.min.js'
+     uglify: {
+      my_target: {
+        files: {
+          'dest/script/script.min.js': ['dest/script/angular.js','dest/script/app.js','dest/script/script.js']
+        }
       }
     }
   });
@@ -35,5 +38,5 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-copy');
   // 默认任务
-  grunt.registerTask('default', ['copy','concat']);
+  grunt.registerTask('default', ['copy','concat','uglify']);
 }
